@@ -62,5 +62,23 @@ export default (router: Router) => {
       middlewares: RequestHandlerParams | null,
       body: (req: Request, done: (responseFn: ResponseFunction) => void) => void,
     ) => handle(path, router, middlewares, body, 'put'),
+
+    deleteReq: (
+      path: string,
+      middlewares: RequestHandlerParams | null,
+      body: (req: Request, done: (responseFn: ResponseFunction) => void) => void,
+    ) => handle(path, router, middlewares, body, 'delete'),
+
+    patchReq: (
+      path: string,
+      middlewares: RequestHandlerParams | null,
+      body: (req: Request, done: (responseFn: ResponseFunction) => void) => void,
+    ) => handle(path, router, middlewares, body, 'patch'),
+
+    headReq: (
+      path: string,
+      middlewares: RequestHandlerParams | null,
+      body: (req: Request, done: (responseFn: ResponseFunction) => void) => void,
+    ) => handle(path, router, middlewares, body, 'head'),
   };
 };
