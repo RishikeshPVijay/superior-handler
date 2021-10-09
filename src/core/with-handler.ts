@@ -34,7 +34,7 @@ export default (router: Router) => {
           const handler = (arg: ResponseFunction, headers: Head) => {
             if (arg.statusCode && (arg.data || arg.error || arg.message)) {
               if (headers && headers.header) {
-                for (var key in headers.header) {
+                for (const key of Object.keys(headers.header)) {
                   res.set(`${key}`, headers.header[key]);
                 }
               }
