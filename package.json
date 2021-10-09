@@ -1,6 +1,6 @@
 {
   "name": "superior-handler",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "A superior extension to express router, middleware and error handling...",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",

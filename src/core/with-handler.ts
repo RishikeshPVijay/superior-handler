@@ -10,8 +10,8 @@ export interface ResponseFunction {
 }
 
 type Head = {
-  header: Header
-}
+  header: Header;
+};
 
 export default (router: Router) => {
   const handle = async (
