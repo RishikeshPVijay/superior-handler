@@ -1,8 +1,7 @@
-import { ErrorClass } from './ErrorClass';
 import { NextFunction, Request, Response } from 'express';
 import { ResponseFunction } from './with-handler';
 
-interface ErrorObj {
+export interface ErrorObj {
   message: string;
   error: {} | string;
   statusCode: number;

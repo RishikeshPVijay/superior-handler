@@ -21,6 +21,14 @@ export default (router: Router) => {
     body: any,
     type: string,
   ) => {
+    if (!path) {
+      process.stderr.write(`${new Error('path is required').stack}\n`);
+      process.exit(1);
+    }
+    if (!body && !middlewares) {
+      process.stderr.write(`${new Error('body is required').stack}\n`);
+      process.exit(1);
+    }
     if (!body && middlewares instanceof Function) {
       body = middlewares;
       middlewares = [];

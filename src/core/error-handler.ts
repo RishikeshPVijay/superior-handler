@@ -1,16 +1,32 @@
 import { NextFunction, Request, Response } from 'express';
-import BadRequest from './_BadRequestError';
+import { ErrorObj } from './middleware';
+import { ResponseFunction } from './with-handler';
 
-export default (err: any, req: Request, res: Response, next: NextFunction) => {
-  if (err.name === 'MongoError') {
-    if (err.code === 11000) {
-      const key = Object.keys(err.keyValue)[0];
-      const resp = BadRequest(`${key} already exists`);
-      return res.status(resp.statusCode).json({
-        message: resp.message,
-        error: resp.error,
-      });
+const errorHandler = ({ debug = false }: { debug: boolean }) => {
+  return {
+    handler: (
+      body: (
+        err: Error,
+        done: (responseFn: ResponseFunction) => void
+      ) => void
+    ) => {
+      return (err: Error, req: Request, res: Response, next: NextFunction) => {
+        if (debug) process.stderr.write(`${err.stack || err.message || err}\n`);
+        const handle = (arg: ErrorObj) => {
+          if (!arg) {
+            process.stderr.write(`${new Error('done handler argument required')}\n`);
+            process.exit(1);
+          }
+          const data = {
+            message: arg.message,
+            error: arg.error
+          };
+          return res.status(arg.statusCode).json(data);
+        }
+        body(err, handle);
+      }
     }
   }
-  return res.status(500).json({ message: 'Server Error' });
-};
+}
+
+export default errorHandler;
